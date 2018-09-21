@@ -1,0 +1,49 @@
+<?xml version='1.0'?>
+<mavlink>
+    <include>common.xml</include>
+    
+     <dialect>2</dialect>
+    <!-- note that APM specific messages should use the command id range from 150 to 250, to leave plenty of room for growth of common.xml If you prototype a message here, then you should consider if it is general enough to move into common.xml later -->
+    <messages>
+        <!-- UI_STRIVE Messages -->
+        <message id="236" name="VISION_DATA">
+          <description>data from dual vision</description>
+          <field type="float" name="vision_x">x position while dual camera is valid</field>
+          <field type="float" name="vision_y">y position while dual camera is valid</field>
+          <field type="float" name="vision_z">z position while dual camera is valid</field>
+          <field type="float" name="vision_vx">vx while dual camera is valid</field>
+          <field type="float" name="vision_vy">vy while dual camera is valid</field>
+          <field type="float" name="vision_vz">vz while dual camera is valid</field>
+          <field type="uint32_t" name="pixel_x">target is x pixels away from the center of a picture. It is only used while dual camera is invalid.</field>
+          <field type="uint32_t" name="pixel_y">target is y pixels away from the center of a picture. It is only used while dual camera is invalid.</field>   
+          <field type="int8_t" name="status">is the vision data valid. 0: invalid, 1:valid</field>
+        </message>
+
+        <message id="237" name="FORMATION">
+          <description>data used for formation communication</description>
+          <field type="int32_t" name="lon">WGS84 lontitude, expressed as degrees * 1E7</field>
+          <field type="int32_t" name="lat">WGS84 latitude, expressed as degrees * 1E7</field>
+          <field type="int32_t" name="alt">Altitude in meters, expressed as * 1000 (millimeters), AMSL (not WGS84 - note that virtually all GPS modules provide the AMSL as well)</field>
+          <field type="float" name="vel_n">velocity in north, expressed as m/s</field>
+          <field type="float" name="vel_e">velocity in east, expressed as m/s</field>
+          <field type="float" name="vel_d">velocity down, expressed as m/s</field>
+          <field type="int8_t" name="status">status, 0:on ground, 1:take off, 2:hover, 3:formation, 4:docking, 5:return, 6:land</field>
+          <field type="int8_t" name="kill">kill 0:normal, 1:kill(stop motors)</field>
+        </message>
+
+        <message id="238" name="FORMATION_TO_GCS">
+          <description>data from dual vision</description>
+          <field type="float" name="dock_time">docking time</field>
+          <field type="int8_t" name="dock_status">-1:dock failed, 0:dock timeout, 1:dock success</field>
+          <field type="int8_t" name="status">status, 0:on ground, 1:take off, 2:hover, 3:formation, 4:docking, 5:return, 6:land</field>
+        </message>
+
+        <message id="239" name="GCS_TO_FORMATION">
+          <description>data from GCS to formation</description>
+          <field type="uint64_t" name="time_usec">Timestamp (micros since boot or Unix epoch)</field>
+          <field type="int32_t" name="lon">WGS84 lontitude, expressed as degrees * 1E7</field>
+          <field type="int32_t" name="lat">WGS84 latitude, expressed as degrees * 1E7</field>
+          <field type="int32_t" name="alt">Altitude in meters, expressed as * 1000 (millimeters), AMSL (not WGS84 - note that virtually all GPS modules provide the AMSL as well)</field>
+        </message>
+      </messages>
+</mavlink>
